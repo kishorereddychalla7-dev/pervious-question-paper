@@ -1,0 +1,787 @@
+
+const papers = [
+  {
+    id: 1,
+    subject: "Data Structures",
+    branch: "CSE",
+    sem: "2-1",
+    reg: "R20",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 2,
+    subject: "Python Programming",
+    branch: "CSE",
+    sem: "1-2",
+    reg: "R23",
+    year: "2024",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 3,
+    subject: "Digital Logic Design",
+    branch: "ECE",
+    sem: "2-1",
+    reg: "R20",
+    year: "2022",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 4,
+    subject: "Thermodynamics",
+    branch: "MECH",
+    sem: "2-2",
+    reg: "R20",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 5,
+    subject: "Database Management Systems",
+    branch: "CSE",
+    sem: "3-1",
+    reg: "R23",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 6,
+    subject: "Control Systems",
+    branch: "EEE",
+    sem: "3-1",
+    reg: "R19",
+    year: "2021",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 7,
+    subject: "Operating Systems",
+    branch: "CSE",
+    sem: "2-2",
+    reg: "R20",
+    year: "2023",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 8,
+    subject: "Computer Networks",
+    branch: "CSSE",
+    sem: "3-1",
+    reg: "R23",
+    year: "2024",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 9,
+    subject: "Microprocessors",
+    branch: "ECE",
+    sem: "3-2",
+    reg: "R23",
+    year: "2022",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 10,
+    subject: "Manufacturing Processes",
+    branch: "MECH",
+    sem: "1-2",
+    reg: "R20",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 11,
+    subject: "Power Systems",
+    branch: "EEE",
+    sem: "3-1",
+    reg: "R19",
+    year: "2021",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 12,
+    subject: "Software Engineering",
+    branch: "CSE",
+    sem: "3-2",
+    reg: "R23",
+    year: "2024",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 13,
+    subject: "Analog Electronics",
+    branch: "ECE",
+    sem: "2-2",
+    reg: "R20",
+    year: "2022",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 14,
+    subject: "Fluid Mechanics",
+    branch: "MECH",
+    sem: "2-2",
+    reg: "R20",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 15,
+    subject: "Engineering Mathematics",
+    branch: "CSE",
+    sem: "1-2",
+    reg: "R23",
+    year: "2024",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 16,
+    subject: "Electromagnetic Fields",
+    branch: "ECE",
+    sem: "2-1",
+    reg: "R20",
+
+    year: "2022",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 17,
+    subject: "Heat Transfer",
+    branch: "MECH",
+    sem: "2-2",
+    reg: "R20",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 18,
+    subject: "Digital Signal Processing",
+    branch: "ECE",
+    sem: "3-2",
+    reg: "R23",
+    year: "2022",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 19,
+    subject: "Microcontroller Systems",
+    branch: "ECE",
+    sem: "3-2",
+    reg: "R23",
+    year: "2022",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 20,
+    subject: "Renewable Energy Systems",
+    branch: "EEE",
+    sem: "3-2",
+    reg: "R23",
+    year: "2022",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 1,
+    subject: "Engineering Mathematics – I",
+    branch: "ALL",
+    sem: "1-1",
+    reg: "R23",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 2,
+    subject: "Engineering Physics",
+    branch: "ALL",
+    sem: "1-1",
+    reg: "R23",
+    year: "2023",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 3,
+    subject: "Programming for Problem Solving (C)",
+    branch: "ALL",
+    sem: "1-2",
+    reg: "R23",
+    year: "2024",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 4,
+    subject: "Engineering Chemistry",
+    branch: "ALL",
+    sem: "1-2",
+    reg: "R23",
+    year: "2024",
+    type: "Supply",
+    link: "#",
+  },
+
+  /* ---------- 2nd Year ---------- */
+  {
+    id: 5,
+    subject: "Data Structures",
+    branch: "CSE",
+    sem: "2-1",
+    reg: "R23",
+    year: "2024",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 6,
+    subject: "Digital Logic Design",
+    branch: "ECE",
+    sem: "2-1",
+    reg: "R23",
+    year: "2024",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 7,
+    subject: "Object Oriented Programming (Java)",
+    branch: "CSE",
+    sem: "2-2",
+    reg: "R23",
+    year: "2025",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 8,
+    subject: "Basic Electrical Engineering",
+    branch: "EEE",
+    sem: "2-2",
+    reg: "R23",
+    year: "2025",
+    type: "Supply",
+    link: "#",
+  },
+
+  /* ---------- 3rd Year ---------- */
+  {
+    id: 9,
+    subject: "Operating Systems",
+    branch: "CSE",
+    sem: "3-1",
+    reg: "R23",
+    year: "2025",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 10,
+    subject: "Microprocessors",
+    branch: "ECE",
+    sem: "3-1",
+    reg: "R23",
+    year: "2025",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 11,
+    subject: "Database Management Systems",
+    branch: "IT",
+    sem: "3-2",
+    reg: "R23",
+    year: "2025",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 12,
+    subject: "Renewable Energy Systems",
+    branch: "EEE",
+    sem: "3-2",
+    reg: "R23",
+    year: "2025",
+    type: "Regular",
+    link: "#",
+  },
+
+  /* ---------- 4th Year ---------- */
+  {
+    id: 13,
+    subject: "Machine Learning",
+    branch: "AI & ML",
+    sem: "4-1",
+    reg: "R23",
+    year: "2026",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 14,
+    subject: "Cloud Computing",
+    branch: "CSE",
+    sem: "4-1",
+    reg: "R23",
+    year: "2026",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 15,
+    subject: "Project Phase – I",
+    branch: "ALL",
+    sem: "4-2",
+    reg: "R23",
+    year: "2026",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 16,
+    subject: "Project Viva Voce",
+    branch: "ALL",
+    sem: "4-2",
+    reg: "R23",
+    year: "2026",
+    type: "Supply",
+    link: "#",
+  },
+
+  /* ================= R20 ================= */
+
+  {
+    id: 17,
+    subject: "Engineering Mathematics – II",
+    branch: "ALL",
+    sem: "1-2",
+    reg: "R20",
+    year: "2021",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 18,
+    subject: "Engineering Physics",
+    branch: "ALL",
+    sem: "1-1",
+    reg: "R20",
+    year: "2021",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 19,
+    subject: "Python Programming",
+    branch: "CSE",
+    sem: "2-1",
+    reg: "R20",
+    year: "2022",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 20,
+    subject: "Signals & Systems",
+    branch: "ECE",
+    sem: "2-1",
+    reg: "R20",
+    year: "2022",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 21,
+    subject: "Computer Networks",
+    branch: "CSSE",
+    sem: "3-1",
+    reg: "R20",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 22,
+    subject: "Power Systems",
+    branch: "EEE",
+    sem: "3-2",
+    reg: "R20",
+    year: "2023",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 23,
+    subject: "Web Technologies",
+    branch: "IT",
+    sem: "4-1",
+    reg: "R20",
+    year: "2024",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 24,
+    subject: "Industrial Management",
+    branch: "MECH",
+    sem: "4-2",
+    reg: "R20",
+    year: "2024",
+    type: "Supply",
+    link: "#",
+  },
+
+  /* ================= R19 ================= */
+
+  {
+    id: 25,
+    subject: "Engineering Chemistry",
+    branch: "ALL",
+    sem: "1-1",
+    reg: "R19",
+    year: "2020",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 26,
+    subject: "Workshop Practice",
+    branch: "ALL",
+    sem: "1-2",
+    reg: "R19",
+    year: "2020",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 27,
+    subject: "Thermodynamics",
+    branch: "MECH",
+    sem: "2-1",
+    reg: "R19",
+    year: "2021",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 28,
+    subject: "Control Systems",
+    branch: "EEE",
+    sem: "2-2",
+    reg: "R19",
+    year: "2021",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 29,
+    subject: "Computer Networks",
+    branch: "CSE",
+    sem: "3-1",
+    reg: "R19",
+    year: "2022",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 30,
+    subject: "VLSI Design",
+    branch: "ECE",
+    sem: "3-2",
+    reg: "R19",
+    year: "2022",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 31,
+    subject: "Big Data Analytics",
+    branch: "IT",
+    sem: "4-1",
+    reg: "R19",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 32,
+    subject: "Project Work",
+    branch: "ALL",
+    sem: "4-2",
+    reg: "R19",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+
+  /* ---------- Extra to reach 50 ---------- */
+  {
+    id: 33,
+    subject: "Linear Algebra",
+    branch: "ALL",
+    sem: "1-1",
+    reg: "R23",
+    year: "2023",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 34,
+    subject: "Probability & Statistics",
+    branch: "ALL",
+    sem: "1-2",
+    reg: "R20",
+    year: "2021",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 35,
+    subject: "Advanced Java",
+    branch: "CSE",
+    sem: "3-2",
+    reg: "R20",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 36,
+    subject: "Embedded Systems",
+    branch: "ECE",
+    sem: "4-1",
+    reg: "R23",
+    year: "2026",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 37,
+    subject: "Artificial Intelligence",
+    branch: "AI & ML",
+    sem: "3-1",
+    reg: "R20",
+    year: "2023",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 38,
+    subject: "Software Engineering",
+    branch: "CSE",
+    sem: "3-2",
+    reg: "R23",
+    year: "2025",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 39,
+    subject: "CAD / CAM",
+    branch: "MECH",
+    sem: "3-1",
+    reg: "R19",
+    year: "2022",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 40,
+    subject: "Environmental Science",
+    branch: "ALL",
+    sem: "2-2",
+    reg: "R20",
+    year: "2022",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 41,
+    subject: "Human Values",
+    branch: "ALL",
+    sem: "2-1",
+    reg: "R23",
+    year: "2024",
+    type: "Supply",
+    link: "papers/vinay_resume.pdf",
+  },
+  {
+    id: 42,
+    subject: "Cyber Security",
+    branch: "CSE",
+    sem: "4-1",
+    reg: "R23",
+    year: "2026",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 43,
+    subject: "Power Electronics",
+    branch: "EEE",
+    sem: "3-1",
+    reg: "R20",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 44,
+    subject: "Digital Signal Processing",
+    branch: "ECE",
+    sem: "3-2",
+    reg: "R20",
+    year: "2023",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 45,
+    subject: "Compiler Design",
+    branch: "CSE",
+    sem: "4-1",
+    reg: "R19",
+    year: "2023",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 46,
+    subject: "Industrial Robotics",
+    branch: "MECH",
+    sem: "4-1",
+    reg: "R23",
+    year: "2026",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 47,
+    subject: "IoT",
+    branch: "CSSE",
+    sem: "3-2",
+    reg: "R23",
+    year: "2025",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 48,
+    subject: "Data Mining",
+    branch: "IT",
+    sem: "4-1",
+    reg: "R20",
+    year: "2024",
+    type: "Regular",
+    link: "#",
+  },
+  {
+    id: 49,
+    subject: "Professional Ethics",
+    branch: "ALL",
+    sem: "4-2",
+    reg: "R20",
+    year: "2024",
+    type: "Supply",
+    link: "#",
+  },
+  {
+    id: 50,
+    subject: "Entrepreneurship Development",
+    branch: "ALL",
+    sem: "3-1",
+    reg: "R19",
+    year: "2022",
+    type: "Regular",
+    link: "#",
+  },
+];
+
+const paperGrid = document.getElementById("paperGrid");
+const searchInput = document.getElementById("searchInput");
+const branchFilter = document.getElementById("branchFilter");
+const semFilter = document.getElementById("semFilter");
+const regFilter = document.getElementById("regFilter");
+const resultCount = document.getElementById("resultCount");
+const noResults = document.getElementById("noResults");
+
+function displayPapers(list) {
+  paperGrid.innerHTML = "";
+
+  if (list.length === 0) {
+    noResults.classList.remove("hidden");
+    resultCount.innerText = "No Papers Found";
+    return;
+  }
+
+  noResults.classList.add("hidden");
+  resultCount.innerText = `Showing ${list.length} Paper(s)`;
+
+  list.forEach((paper) => {
+    paperGrid.innerHTML += `
+      <div class="bg-white p-6 rounded-2xl border shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300">
+        
+        <h4 class="font-bold text-lg mb-1">${paper.subject}</h4>
+        <p class="text-sm text-gray-600">${paper.branch} • ${paper.sem}</p>
+        <p class="text-sm text-gray-500 mb-4">${paper.reg} • ${paper.year}</p>
+
+       <a href="${paper.link}" target="_blank" class="download-btn-3d">
+          <i class="fa fa-download mr-2"></i> Download PDF
+         </a>
+
+      </div>
+    `;
+  });
+}
+
+function filterPapers() {
+  const search = searchInput.value.toLowerCase();
+  const branch = branchFilter.value;
+  const sem = semFilter.value;
+  const reg = regFilter.value;
+
+  const filtered = papers.filter(
+    (p) =>
+      p.subject.toLowerCase().includes(search) &&
+      (branch === "All" || p.branch === branch) &&
+      (sem === "All" || p.sem === sem) &&
+      (reg === "All" || p.reg === reg),
+  );
+
+  displayPapers(filtered);
+}
+
+function resetFilters() {
+  searchInput.value = "";
+  branchFilter.value = "All";
+  semFilter.value = "All";
+  regFilter.value = "All";
+  displayPapers(papers);
+}
+
+searchInput.addEventListener("input", filterPapers);
+branchFilter.addEventListener("change", filterPapers);
+semFilter.addEventListener("change", filterPapers);
+regFilter.addEventListener("change", filterPapers);
+
+displayPapers(papers);

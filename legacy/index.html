@@ -1,0 +1,146 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-site-verification"
+      content="qOt1fQhsW8itXk_eouupx8YtK5XI0NkUrKsEWzl2rTM"
+    />
+    <title>Lendi previous question Papers Hub | Student Resource</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="bg-slate-50 text-slate-800">
+    <!-- NAVBAR -->
+    <nav class="bg-blue-900 text-white p-4 sticky top-0 z-50 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <div class="bg-yellow-400 text-blue-900 p-2 rounded font-bold">
+            LIET
+          </div>
+          <h1 class="text-xl font-bold tracking-tight hidden md:block">
+            Lendi previous question Papers Hub
+          </h1>
+        </div>
+        <div class="flex gap-4 items-center text-sm">
+          <a href="#" class="hover:text-yellow-400">Home</a>
+          <a
+            href="https://www.lendi.edu.in/"
+            target="_blank"
+            class="bg-blue-700 px-3 py-1 rounded hover:bg-blue-600"
+            >Official Website</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header
+      class="bg-gradient-to-r from-blue-800 to-indigo-900 py-12 px-4 text-center text-white"
+    >
+      <h2 class="text-3xl md:text-5xl font-extrabold mb-4">
+        Exam Success Starts Here
+      </h2>
+      <p class="mb-8 text-blue-100 max-w-xl mx-auto italic">
+        "Your one-stop destination for all Lendi previous year question papers."
+      </p>
+
+      <div class="max-w-2xl mx-auto relative group">
+        <i
+          class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+        ></i>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search subject (e.g. Python, DBMS, Maths)..."
+          class="w-full p-4 pl-12 rounded-full text-gray-800 shadow-2xl outline-none"
+        />
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="container mx-auto py-8 px-4">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- FILTERS -->
+        <aside class="w-full lg:w-1/4 space-y-6">
+          <div class="bg-white p-6 rounded-2xl shadow-sm border">
+            <h3 class="font-bold text-lg mb-4">
+              <i class="fa fa-sliders text-blue-600"></i> Smart Filters
+            </h3>
+
+            <div class="space-y-4">
+              <select id="branchFilter" class="w-full border p-2.5 rounded-lg">
+                <option value="All">All Branches</option>
+                <option value="CSE">CSE</option>
+                <option value="ECE">ECE</option>
+                <option value="MECH">MECH</option>
+                <option value="EEE">EEE</option>
+                <option value="CSSE">CSSE</option>
+                <option value="IT">IT</option>
+                <option value="AI & ML">AI & ML</option>
+              </select>
+
+              <select id="semFilter" class="w-full border p-2.5 rounded-lg">
+                <option value="All">All Semesters</option>
+                <option value="1-1">1-1</option>
+                <option value="1-2">1-2</option>
+                <option value="2-1">2-1</option>
+                <option value="2-2">2-2</option>
+                <option value="3-1">3-1</option>
+                <option value="3-2">3-2</option>
+                <option value="4-1">4-1</option>
+                <option value="4-2">4-2</option>
+              </select>
+
+              <select id="regFilter" class="w-full border p-2.5 rounded-lg">
+                <option value="All">All Regulations</option>
+                <option value="R23">R23</option>
+                <option value="R20">R20</option>
+                <option value="R19">R19</option>
+              </select>
+
+              <button onclick="resetFilters()" class="text-blue-600 text-sm">
+                Clear All Filters
+              </button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- PAPERS -->
+        <section class="w-full lg:w-3/4">
+          <h3 class="text-xl font-bold mb-4" id="resultCount"></h3>
+          <div
+            id="paperGrid"
+            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+          ></div>
+
+          <div id="noResults" class="hidden text-center py-20">
+            <h3 class="text-xl font-semibold">No papers found</h3>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t mt-20 py-10 text-center text-sm">
+      © 2026 Lendi Institute of Engineering and Technology
+    </footer>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+  </body>
+</html>
