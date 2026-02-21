@@ -83,7 +83,7 @@ export default function TeacherDashboard() {
     };
 
     const viewStory = (storyId: string) => {
-        router.push(`/story/${storyId}`);
+        router.push(`/story?id=${storyId}`);
     };
 
     return (

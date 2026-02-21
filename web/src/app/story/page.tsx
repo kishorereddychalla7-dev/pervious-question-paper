@@ -1,11 +1,13 @@
 'use client';
-import { useState, useEffect, use } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { doc, getDoc, updateDoc, increment, addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "../../../utils/firebase";
+import { db } from "../../utils/firebase";
 
-export default function StoryPlayer({ params }: { params: Promise<{ id: string }> }) {
+function StoryContent() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id');
     const [story, setStory] = useState<any>(null);
     const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
     const [viewState, setViewState] = useState<'LOADING' | 'INTRO' | 'NARRATIVE' | 'QUESTION' | 'FEEDBACK' | 'RECAP' | 'FINISH'>('LOADING');
@@ -13,16 +15,18 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
     const [isCorrect, setIsCorrect] = useState(false);
     const [score, setScore] = useState(0);
 
-    // Unwrap params using React.use()
-    const { id } = use(params);
-
     useEffect(() => {
+        if (!id) {
+            router.push('/dashboard/student');
+            return;
+        }
         fetchStory();
     }, [id]);
 
     const fetchStory = async () => {
+        if (!id) return;
         try {
-            const storyRef = doc(db, "stories", id);
+            const storyRef = doc(db, "stories", id as string);
             const storyDoc = await getDoc(storyRef);
 
             if (storyDoc.exists()) {
@@ -195,5 +199,13 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
             )}
 
         </div>
+    );
+}
+
+export default function StoryPlayer() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-black text-white">Initializing Adventure...</div>}>
+            <StoryContent />
+        </Suspense>
     );
 }

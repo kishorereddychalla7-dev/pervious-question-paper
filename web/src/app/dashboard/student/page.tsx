@@ -48,7 +48,7 @@ export default function StudentDashboard() {
     }, [router]);
 
     const startStory = (storyId: string) => {
-        router.push(`/story/${storyId}`);
+        router.push(`/story?id=${storyId}`);
     };
 
     return (
