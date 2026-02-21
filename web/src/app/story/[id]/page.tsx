@@ -1,7 +1,8 @@
 'use client';
 import { useState, useEffect, use } from 'react';
-import api from '../../../utils/api';
 import { useRouter } from 'next/navigation';
+import { doc, getDoc, updateDoc, increment, addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../../../utils/firebase";
 
 export default function StoryPlayer({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter();
@@ -10,6 +11,7 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
     const [viewState, setViewState] = useState<'LOADING' | 'INTRO' | 'NARRATIVE' | 'QUESTION' | 'FEEDBACK' | 'RECAP' | 'FINISH'>('LOADING');
     const [selectedOption, setSelectedOption] = useState('');
     const [isCorrect, setIsCorrect] = useState(false);
+    const [score, setScore] = useState(0);
 
     // Unwrap params using React.use()
     const { id } = use(params);
@@ -20,9 +22,16 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
 
     const fetchStory = async () => {
         try {
-            const res = await api.get(`/stories/${id}`);
-            setStory(res.data);
-            setViewState('INTRO');
+            const storyRef = doc(db, "stories", id);
+            const storyDoc = await getDoc(storyRef);
+
+            if (storyDoc.exists()) {
+                setStory(storyDoc.data());
+                setViewState('INTRO');
+            } else {
+                alert('Story not found');
+                router.push('/dashboard/student');
+            }
         } catch (err) {
             console.error(err);
             alert('Failed to load story');
@@ -33,24 +42,36 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
 
     const handleNext = () => setViewState('QUESTION');
 
-    const handleSubmitAnswer = () => {
+    const handleSubmitAnswer = async () => {
+        const userStr = localStorage.getItem('user');
+        if (!userStr) return;
+        const user = JSON.parse(userStr);
+
         const currentChapter = story.chapters[currentChapterIndex];
-        if (selectedOption === currentChapter.questionId.correctAnswer) {
-            setIsCorrect(true);
-            setViewState('FEEDBACK');
-        } else {
-            setIsCorrect(false);
-            setViewState('FEEDBACK');
+        const correct = selectedOption === currentChapter.question.correctAnswer;
+
+        setIsCorrect(correct);
+        if (correct) setScore(prev => prev + 10);
+
+        // Save attempt in Firestore
+        try {
+            await addDoc(collection(db, "attempts"), {
+                userId: user.uid,
+                storyId: id,
+                chapterIndex: currentChapterIndex,
+                chosenAnswer: selectedOption,
+                isCorrect: correct,
+                timestamp: serverTimestamp()
+            });
+        } catch (e) {
+            console.error("Failed to save attempt", e);
         }
+
+        setViewState('FEEDBACK');
     };
 
     const handleContinue = () => {
-        if (isCorrect) {
-            setViewState('RECAP');
-        } else {
-            // Retry or Continue? For MVP, let's just show feedback and allow continue
-            setViewState('RECAP');
-        }
+        setViewState('RECAP');
         setSelectedOption('');
     };
 
@@ -59,15 +80,16 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
             setCurrentChapterIndex(prev => prev + 1);
             setViewState('NARRATIVE');
         } else {
-            // Game Over - Give Points
-            const points = 100; // Mock calculation
+            // End of story - Update user score in Firestore
             const userStr = localStorage.getItem('user');
             if (userStr) {
                 const user = JSON.parse(userStr);
                 try {
-                    await api.put(`/users/${user.id}/score`, { points });
-                    // Update local storage score if needed
-                } catch (e) { console.error("Failed to update score"); }
+                    const userRef = doc(db, "users", user.uid);
+                    await updateDoc(userRef, {
+                        score: increment(score)
+                    });
+                } catch (e) { console.error("Failed to update total score", e); }
             }
             setViewState('FINISH');
         }
@@ -76,7 +98,7 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
     if (viewState === 'LOADING' || !story) return <div className="min-h-screen flex items-center justify-center bg-black text-white">Loading Adventure...</div>;
 
     const currentChapter = story.chapters[currentChapterIndex];
-    const question = currentChapter?.questionId;
+    const question = currentChapter?.question;
 
     return (
         <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6">
@@ -95,7 +117,7 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
                 <div className="max-w-2xl space-y-6 animate-in slide-in-from-right duration-500">
                     <div className="text-lg text-gray-400 uppercase tracking-widest">Chapter {currentChapterIndex + 1}</div>
                     <p className="text-2xl leading-relaxed">{currentChapter.narrative}</p>
-                    <button onClick={handleNext} className="w-full py-3 bg-blue-600 rounded-lg font-bold hover:bg-blue-700">
+                    <button onClick={handleNext} className="w-full py-3 bg-blue-600 rounded-lg font-bold hover:bg-blue-700 transition-all active:scale-95">
                         Next
                     </button>
                 </div>
@@ -123,7 +145,7 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
                     <button
                         onClick={handleSubmitAnswer}
                         disabled={!selectedOption}
-                        className="w-full py-3 bg-green-600 disabled:bg-gray-600 rounded-lg font-bold"
+                        className="w-full py-3 bg-green-600 disabled:bg-gray-600 rounded-lg font-bold transition-all active:scale-95"
                     >
                         Submit Answer
                     </button>
@@ -131,42 +153,42 @@ export default function StoryPlayer({ params }: { params: Promise<{ id: string }
             )}
 
             {viewState === 'FEEDBACK' && (
-                <div className="max-w-xl w-full text-center space-y-6">
+                <div className="max-w-xl w-full text-center space-y-6 animate-in fade-in duration-500">
                     <div className={`text-6xl ${isCorrect ? 'text-green-500' : 'text-red-500'} font-bold`}>
                         {isCorrect ? 'SUCCESS!' : 'FAILURE'}
                     </div>
                     <p className="text-xl">{isCorrect ? 'You solved the challenge correctly!' : 'The system rejected your answer.'}</p>
 
-                    <div className="bg-gray-800 p-6 rounded-lg text-left">
+                    <div className="bg-gray-800 p-6 rounded-lg text-left border-l-4 border-blue-500">
                         <h3 className="font-bold text-gray-400 mb-2">Analysis:</h3>
                         <p className="text-gray-200">{question.explanation}</p>
                     </div>
 
-                    <button onClick={handleContinue} className="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200">
+                    <button onClick={handleContinue} className="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-all active:scale-95">
                         Continue
                     </button>
                 </div>
             )}
 
             {viewState === 'RECAP' && (
-                <div className="max-w-2xl text-center space-y-6">
+                <div className="max-w-2xl text-center space-y-6 animate-in slide-in-from-bottom duration-500">
                     <h2 className="text-3xl font-bold text-blue-400">Chapter Complete</h2>
-                    <p className="text-xl leading-relaxed">{currentChapter.recap}</p>
-                    <button onClick={handleNextChapter} className="px-8 py-3 bg-purple-600 rounded-full font-bold hover:bg-purple-700">
+                    <p className="text-xl leading-relaxed italic">"{currentChapter.recap}"</p>
+                    <button onClick={handleNextChapter} className="px-8 py-3 bg-purple-600 rounded-full font-bold hover:bg-purple-700 transition-all active:scale-95 shadow-lg shadow-purple-500/20">
                         {currentChapterIndex + 1 < story.chapters.length ? 'Next Chapter' : 'Complete Mission'}
                     </button>
                 </div>
             )}
 
             {viewState === 'FINISH' && (
-                <div className="text-center space-y-8">
-                    <h1 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500">
-                        Advenure Complete!
+                <div className="text-center space-y-8 animate-in zoom-in duration-700">
+                    <h1 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500">
+                        Mission Accomplished!
                     </h1>
-                    <p className="text-2xl text-gray-300">You have successfully restored order to the universe.</p>
+                    <p className="text-2xl text-gray-300">You earned <span className="text-yellow-500 font-bold">{score}</span> story points!</p>
                     <div className="flex justify-center gap-4">
-                        <button onClick={() => router.push('/dashboard/student')} className="px-6 py-3 bg-gray-700 rounded-lg hover:bg-gray-600">
-                            Back to Dashboard
+                        <button onClick={() => router.push('/dashboard/student')} className="px-8 py-3 bg-pink-600 rounded-full font-bold hover:bg-pink-700 transition-all">
+                            Back to Base
                         </button>
                     </div>
                 </div>
